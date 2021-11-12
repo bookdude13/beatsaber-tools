@@ -1,18 +1,20 @@
 CC := g++
 SRCDIR := src
 BUILDDIR := build
-TARGET := bin/bs-tools
+BINDIR := bin
+TARGET := $(BINDIR)/bs-tools
 
 SRCEXT := cpp
 OBJEXT := o
 SOURCES := $(shell find $(SRCDIR) -type f -name *.$(SRCEXT))
 OBJECTS := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%, $(SOURCES:.$(SRCEXT)=.$(OBJEXT)))
-CFLAGS := -g -Wall
+CFLAGS := -std=gnu++17 -g -Wall
 INCLUDE := -I include
 
 # Link .o files into target
 # $^ is all prerequisites
 $(TARGET): $(OBJECTS)
+	@mkdir -p $(BINDIR)
 	@echo " Linking..."
 	$(CC) $^ -o $(TARGET)
 
@@ -25,6 +27,6 @@ $(BUILDDIR)/%.$(OBJEXT): $(SRCDIR)/%.$(SRCEXT)
 clean:
 	@echo " Cleaning..."
 	@echo " $(RM) -r $(BUILDDIR) $(TARGET)"
-	$(RM) -r $(BUILDDIR) $(TARGET)
+	$(RM) -r $(BUILDDIR) $(BINDIR)
 
 .PHONY: clean

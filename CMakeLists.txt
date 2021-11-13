@@ -2,8 +2,25 @@ cmake_minimum_required(VERSION 3.14)
 
 include(FetchContent)
 
-# set the project name
-project(BeatSaberTools)
+# Set the project name
+project(bs-tools)
+
+# Configure Source & Binary Directories
+SET (PROJECT_ROOT "${PROJECT_SOURCE_DIR}")
+SET (PROJECT_SOURCE_DIR "${PROJECT_ROOT}/src")
+SET (PROJECT_TEST_DIR "${PROJECT_ROOT}/test")
+SET (PROJECT_BINARY_DIR "${PROJECT_BINARY_DIR}/bin")
+SET (PROJECT_INCLUDE_DIR "${PROJECT_ROOT}/include")
+MESSAGE ("Source path: ${PROJECT_SOURCE_DIR}")
+MESSAGE ("Binary path: ${PROJECT_BINARY_DIR}")
+MESSAGE ("Include path: ${PROJECT_INCLUDE_DIR}")
+MESSAGE ("Test path: ${PROJECT_TEST_DIR}")
+
+# Setup source files
+set(LIB_SOURCES
+  ${PROJECT_SOURCE_DIR}/CustomSongInfo.cpp
+  ${PROJECT_SOURCE_DIR}/SongHashDataRepository.cpp
+)
 
 # Use C++ 17
 set(CMAKE_CXX_STANDARD 17)
@@ -30,19 +47,25 @@ FetchContent_Declare(
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
-# Configure Source & Binary Directories
-SET (PROJECT_ROOT "${PROJECT_SOURCE_DIR}")
-SET (PROJECT_SOURCE_DIR "${PROJECT_SOURCE_DIR}/src")
-SET (PROJECT_BINARY_DIR "${PROJECT_BINARY_DIR}/bin")
-SET (PROJECT_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/include")
-MESSAGE ("Source path: ${PROJECT_SOURCE_DIR}")
-MESSAGE ("Binary path: ${PROJECT_BINARY_DIR}")
-MESSAGE ("Include path: ${PROJECT_INCLUDE_DIR}")
+
+# Main library
+add_library(${PROJECT_NAME}-lib STATIC ${LIB_SOURCES})
 
 # Includes
-include_directories(
-    ${PROJECT_INCLUDE_DIR},
-    ${PROJECT_ROOT}/build/_deps/json-src/include
+target_include_directories(${PROJECT_NAME}-lib PUBLIC
+    "${PROJECT_INCLUDE_DIR}",
+    "${PROJECT_ROOT}/build/_deps/json-src/include"
 )
 
-add_executable(BeatSaberTools ${PROJECT_SOURCE_DIR}/main.cpp)
+# Main executable
+add_executable(${PROJECT_NAME} ${PROJECT_SOURCE_DIR}/main.cpp)
+target_link_libraries(${PROJECT_NAME} ${PROJECT_NAME}-lib)
+
+# Tests
+enable_testing()
+
+add_executable(${PROJECT_NAME}-test ${PROJECT_TEST_DIR}/main.cpp)
+target_link_libraries(${PROJECT_NAME}-test gtest_main ${PROJECT_NAME}-lib)
+
+include(GoogleTest)
+gtest_discover_tests(${PROJECT_NAME}-test)

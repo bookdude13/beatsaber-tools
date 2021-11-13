@@ -14,5 +14,7 @@ class CustomSongInfo {
 
     public:
     CustomSongInfo(uint64_t directoryHash, std::string songHash, std::string rootDirectory);
-    std::string printValue();
+    std::string getSongName() { return _songName; }
+    std::string getSongHash() { return _songHash; }
+    std::string toString();
 };

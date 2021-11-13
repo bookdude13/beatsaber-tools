@@ -27,7 +27,7 @@ std::vector<CustomSongInfo> SongHashDataRepository::parseSongHashData(json songH
             rawInfo["songHash"],
             songDirectory
         );
-        std::cout << songInfo.printValue() << "\n";
+        std::cout << songInfo.toString() << "\n";
         customSongs.push_back(songInfo);
     }
     return customSongs;

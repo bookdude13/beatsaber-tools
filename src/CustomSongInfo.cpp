@@ -10,6 +10,6 @@ CustomSongInfo::CustomSongInfo(uint64_t directoryHash, std::string songHash, std
     _songName = rootDirectory.substr(lastSep + 1);
 }
 
-std::string CustomSongInfo::printValue() { 
+std::string CustomSongInfo::toString() { 
     return _songName + ": " + _songHash + ", " + std::to_string(_directoryHash);
 }

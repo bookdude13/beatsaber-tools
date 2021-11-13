@@ -52,6 +52,11 @@
         "cstring": "cpp",
         "forward_list": "cpp",
         "map": "cpp",
-        "valarray": "cpp"
+        "valarray": "cpp",
+        "any": "cpp",
+        "list": "cpp",
+        "set": "cpp",
+        "unordered_set": "cpp",
+        "variant": "cpp"
     }
 }

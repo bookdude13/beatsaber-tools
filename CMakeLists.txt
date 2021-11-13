@@ -20,6 +20,12 @@ MESSAGE ("Test path: ${PROJECT_TEST_DIR}")
 set(LIB_SOURCES
   ${PROJECT_SOURCE_DIR}/CustomSongInfo.cpp
   ${PROJECT_SOURCE_DIR}/SongHashDataRepository.cpp
+  ${PROJECT_SOURCE_DIR}/SongService.cpp
+)
+
+set(TEST_SOURCES
+  ${PROJECT_TEST_DIR}/SongHashDataRepositoryTest.cpp
+  ${PROJECT_TEST_DIR}/SongServiceTest.cpp
 )
 
 # Use C++ 17
@@ -64,7 +70,7 @@ target_link_libraries(${PROJECT_NAME} ${PROJECT_NAME}-lib)
 # Tests
 enable_testing()
 
-add_executable(${PROJECT_NAME}-test ${PROJECT_TEST_DIR}/main.cpp)
+add_executable(${PROJECT_NAME}-test ${TEST_SOURCES})
 target_link_libraries(${PROJECT_NAME}-test gtest_main ${PROJECT_NAME}-lib)
 
 include(GoogleTest)

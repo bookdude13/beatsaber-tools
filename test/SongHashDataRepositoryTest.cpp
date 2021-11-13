@@ -3,7 +3,7 @@
 #include "CustomSongInfo.h"
 #include "SongHashDataRepository.h"
 
-TEST(SongHashDataRepository, ParseSuccess) {
+TEST(SongHashDataRepositoryTest, ParseSuccess) {
     SongHashDataRepository repo = SongHashDataRepository("");
     json testHashData = {
         {

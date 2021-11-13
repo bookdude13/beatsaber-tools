@@ -1,8 +1,9 @@
+#pragma once
+
 #include <filesystem>
 #include <vector>
 
 #include <nlohmann/json.hpp>
-#pragma once
 
 #include "CustomSongInfo.h"
 
@@ -11,10 +12,11 @@ using json = nlohmann::json;
 
 class SongHashDataRepository {
     private:
-    fs::path _hashDataFilePath;
-    json readSongHashData();
+        fs::path _hashDataFilePath;
+    protected:
+        virtual json readSongHashData();
     public:
-    SongHashDataRepository(fs::path beatSaberRootPath);
-    std::vector<CustomSongInfo> parseSongHashData(json songHashData);
-    std::vector<CustomSongInfo> getSongHashData();
+        SongHashDataRepository(fs::path beatSaberRootPath);
+        std::vector<CustomSongInfo> parseSongHashData(json songHashData);
+        std::vector<CustomSongInfo> getSongHashData();
 };

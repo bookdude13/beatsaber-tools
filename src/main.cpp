@@ -7,6 +7,7 @@
 
 #include "CustomSongInfo.h"
 #include "SongHashDataRepository.h"
+#include "SongService.h"
 
 namespace fs = std::filesystem;
 using json = nlohmann::json;
@@ -34,8 +35,9 @@ int main() {
 
     fs::path beatSaberPath = "/mnt/c/Program Files (x86)/Steam/steamapps/common/Beat Saber";
 
-    SongHashDataRepository songHashDataRepository = SongHashDataRepository(beatSaberPath);
-    std::vector<CustomSongInfo> customSongs = songHashDataRepository.getSongHashData();
+    SongHashDataRepository* songHashDataRepository = new SongHashDataRepository(beatSaberPath);
+    SongService songService = SongService(songHashDataRepository);
+    std::vector<CustomSongInfo> customSongs = songService.getSongs();
 
     std::cout << "Done.\n";
     return 0;

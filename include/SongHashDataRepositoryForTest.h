@@ -6,17 +6,11 @@ class SongHashDataRepositoryForTest : public SongHashDataRepository {
     private:
         json _songHashData;
     protected:
-        virtual json readSongHashData() override;
+        virtual json readSongHashData() override {
+            return _songHashData;
+        }
     public:
-        SongHashDataRepositoryForTest(json songHashData);
+        SongHashDataRepositoryForTest(json songHashData) : SongHashDataRepository("test") {
+            _songHashData = songHashData;
+        }
 };
-
-SongHashDataRepositoryForTest::SongHashDataRepositoryForTest(json songHashData) : SongHashDataRepository("") {
-    _songHashData = songHashData;
-}
-
-// Override
-json SongHashDataRepositoryForTest::readSongHashData() {
-    std::cout << "for test" << "\n";
-    return _songHashData;
-}
